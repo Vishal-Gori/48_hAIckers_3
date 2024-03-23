@@ -68,22 +68,7 @@ authoritydb = firebase.database()
 person = {"is_logged_in": False, "name": "", "email": "", "uid": "","DHT":False,"MPU":False,"location":""}
 authority={"is_logged_in": False, "name": "", "email": "", "uid": ""}
 
-rf_regressor_min_temp = joblib.load('rf_regressor_min_temp.joblib')
-rf_regressor_max_temp = joblib.load('rf_regressor_max_temp.joblib')
 
-data_path = "/Sensor/DS18B20/Temperature"
-@app.before_request
-def before_request():
-    if request.endpoint == 'input' and not person["is_logged_in"]:
-        return redirect(url_for('login'))
-    elif request.endpoint == 'sensors' and not person["is_logged_in"]:
-        return redirect(url_for('login'))
-    elif request.endpoint == 'dht_sensor' and not person["is_logged_in"]:
-        return redirect(url_for('login'))
-    elif request.endpoint == 'mpu_sensor' and not person["is_logged_in"]:
-        return redirect(url_for('login'))
-    elif request.endpoint == 'urdht_sensor' and (not person["is_logged_in"] or not person["DHT"]):
-        return redirect(url_for('home'))
 
 @app.route("/login")
 def login():
@@ -106,21 +91,7 @@ def authoHome():
         return render_template("authority_home.html",authority=authority)
     else:
         return redirect(url_for('authoritylogin'))
-@socketio.on('alert_clicked')
-def handle_alert():
-    message = "There is an Emergency!"
-    emit('alert_message', message, broadcast=True)
-@socketio.on('emergency_alert')
-def handle_emergencyalert(message):
-    emit('emergency_alert', message, broadcast=True)
-@socketio.on('temperature_alert')
-def handle_temperature_alert(data):
     
-    temperature = data.get('temperature')
-    user_latitude = person.get("latitude")
-    user_longitude = person.get("longitude")
-
-    emit('temperature_alert', {'temperature': temperature, 'user_latitude': user_latitude,'user_longitude':user_longitude}, broadcast=True)
 @app.route("/authorityresult", methods = ["POST", "GET"])
 def authoresult():
     if request.method == "POST":
@@ -273,64 +244,8 @@ def logout():
     person["uid"] = ""
     return redirect(url_for('login'))
 
-@app.route('/realtime_data')
-def realtime_data():
-    # Simulated data fetching from Firebase (replace this with your actual data retrieval)
-    data = {"timestamp": int(time.time()), "value": get_updated_value()}
-    return jsonify(data)
-
-def update_data():
-    while True:
-        # Fetch and update data every 3 seconds
-        data = {"timestamp": int(time.time()), "value": get_updated_value()}
-        # Simulated data update to Firebase (replace this with your actual data update)
-        time.sleep(3)
-
-def get_updated_value():
-    data = fb.child("/Sensor/DS18B20/Temperature").get().val()
-    return data
-
-@app.route('/input_fields')
-def input():
-    return render_template('input_fields.html', person=person)
-@app.route('/sensors')
-def sensors():
-    return render_template('sensors.html', person=person)
-@app.route('/dht_sensor')
-def dht_sensor():
-    return render_template('dhtSensor.html', person=person)
-@app.route('/mpu_sensor')
-def mpu_sensor():
-    return render_template('mpuSensor.html', person=person)
-@app.route('/urDHT_sensor')
-def urdht_sensor():
-    return render_template('yourSensor_DHT.html', person=person)
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    # Get input data from the request
-    input_data = request.form
-    
-    # Extract features from input data
-    features = [
-        input_data['Humidity9am'],
-        input_data['Humidity3pm'],
-        input_data['Temp9am'],
-        input_data['Temp3pm']
-    ]
-    
-    # Make predictions using the trained models
-    min_temp_prediction = rf_regressor_min_temp.predict([features])[0]
-    max_temp_prediction = rf_regressor_max_temp.predict([features])[0]
-    
-    # Create a response with the predictions
-    
-    # Return the response as JSON
-    return render_template('result.html', min_temp_prediction=min_temp_prediction, max_temp_prediction=max_temp_prediction)
-    
+   
 if __name__ == '__main__':
     # Start a thread for updating data in the background
-    data_update_thread = threading.Thread(target=update_data)
-    data_update_thread.start()
-    # Run the Flask app
+
     socketio.run(app, debug=True,allow_unsafe_werkzeug=True)
