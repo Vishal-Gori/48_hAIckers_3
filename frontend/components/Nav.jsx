@@ -31,7 +31,9 @@ const Nav = () => {
         />
         <p className="logo_text">HR Connext</p>
       </Link>
-      {/* Desktop Navigation */}
+      <Link href="http://localhost:8501/">analyze Resume </Link> 
+      <Link href="http://localhost:8502/">Course recommendation</Link>
+      <Link href="http://localhost:8503/" >Job recommendation</Link>    {/* Desktop Navigation */}
       <div className="sm:flex hidden">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
