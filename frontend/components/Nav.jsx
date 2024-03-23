@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+
 const Nav = () => {
   const { data: session } = useSession();
 
@@ -31,14 +32,11 @@ const Nav = () => {
         />
         <p className="logo_text">HR Connext</p>
       </Link>
+      
       {/* Desktop Navigation */}
-      <div className="sm:flex hidden">
+      <div className="sm:flex hidden justify-end items-center">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
-            <button type="button" onClick={signOut} className="outline_btn">
-              Sign Out
-            </button>
-
             <Link href="/profile">
               <Image
                 src={session?.user.image}
@@ -48,6 +46,9 @@ const Nav = () => {
                 alt="Profile"
               />
             </Link>
+            <button type="button" onClick={signOut} className="outline_btn">
+              Sign Out
+            </button>
           </div>
         ) : (
           <>
@@ -67,7 +68,7 @@ const Nav = () => {
       </div>
 
       {/* Mobile Navigation */}
-      <div className="sm:hidden flex relative">
+      <div className="sm:hidden flex relative justify-end items-center">
         {session?.user ? (
           <div className="flex">
             <Image
@@ -101,7 +102,7 @@ const Nav = () => {
                     setToggleDropdown(false);
                     signOut();
                   }}
-                  className="mt-5 w-full black_btn"
+                  className="mt-7 w-full black_btn"
                 >
                   Sign Out
                 </button>

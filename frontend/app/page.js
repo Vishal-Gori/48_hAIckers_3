@@ -1,7 +1,11 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-
+import AppScreenshotWithCTAsHero from "@/components/appss"
+import DefaultFeatureListSection from "@/components/default"
+import DefaultNewsletterSection from "@/components/newsletter"
+import AlternateImageWithFeatureListSection from "@/components/alternate"
+import IllustrationWithStatisticsSocialProof from "@/components/illustration"
 export default function Home() {
 
   const [data, setData] = useState(null);
@@ -16,7 +20,15 @@ export default function Home() {
   }, [])
   
   return (
-    <h1>{data}</h1>
+    <div>
+      <h1>{data}</h1>
+      <AppScreenshotWithCTAsHero/>
+      <DefaultFeatureListSection/>
+      {/* <DefaultNewsletterSection/> */}
+      <AlternateImageWithFeatureListSection/>
+      <IllustrationWithStatisticsSocialProof/>
+    </div>
+    
   );
 }
 
