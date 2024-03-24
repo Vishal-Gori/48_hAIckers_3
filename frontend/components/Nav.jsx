@@ -31,10 +31,7 @@ const Nav = () => {
           className="object-contain"
         />
         <p className="logo_text">HR Connext</p>
-      </Link>
-      <Link href="http://localhost:8501/">analyze Resume </Link> 
-      <Link href="http://localhost:8502/">Course recommendation</Link>
-      <Link href="http://localhost:8503/" >Job recommendation</Link>  
+      </Link>  
       {/* Desktop Navigation */}
       <div className="sm:flex hidden justify-end items-center">
         {session?.user ? (
