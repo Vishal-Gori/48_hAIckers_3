@@ -1,6 +1,16 @@
+
 "use client"
 import Select from 'react-select';
-import { useEffect, useState } from 'react';
+
+
+
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import AppScreenshotWithCTAsHero from "@/components/appss"
+import DefaultFeatureListSection from "@/components/default"
+import DefaultNewsletterSection from "@/components/newsletter"
+import AlternateImageWithFeatureListSection from "@/components/alternate"
+import IllustrationWithStatisticsSocialProof from "@/components/illustration"
 
 export default function Home() {
   const [skills, setSkills] = useState([]);
@@ -73,45 +83,12 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Career Recommendation System</h1>
-      <select value={selectedUg} onChange={(e) => setSelectedUg(e.target.value)}>
-        <option value="">Select your Undergraduate Program</option>
-        {ugPrograms.map((ug) => (
-          <option key={ug} value={ug}>{ug}</option>
-        ))}
-      </select>
-      <Select
-        isMulti
-        name="skills"
-        options={skillOptions}
-        className="basic-multi-select"
-        classNamePrefix="select"
-        onChange={handleSkillsChange}
-        value={skillOptions.filter(option => selectedSkills.includes(option.value))}
-      />
-      <Select
-        isMulti
-        name="interests"
-        options={interestOptions}
-        className="basic-multi-select"
-        classNamePrefix="select"
-        onChange={handleInterestsChange}
-        value={interestOptions.filter(option => selectedInterests.includes(option.value))}
-      />
-      
-
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleRecommendation}>Get Recommendations</button>
-
-      {recommendations.length > 0 && (
-        <div>
-          <h2>Recommendations</h2>
-          <ul>
-            {recommendations.map((job, index) => (
-              <li key={index}>{job}</li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <h1>{data}</h1>
+      <AppScreenshotWithCTAsHero/>
+      <DefaultFeatureListSection/>
+      {/* <DefaultNewsletterSection/> */}
+      <AlternateImageWithFeatureListSection/>
+      <IllustrationWithStatisticsSocialProof/>
     </div>
   );
 }

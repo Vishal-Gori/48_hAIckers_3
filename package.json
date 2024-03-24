@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "react-select": "^5.8.0"
+
+    "flowbite": "^2.3.0",
+    "flowbite-react": "^0.7.5"
+
   }
 }
