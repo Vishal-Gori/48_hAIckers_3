@@ -1,3 +1,4 @@
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
@@ -5,16 +6,14 @@ from models.ResumeParser import resume_analyzer
 from models.CourseModel import recommendCourses
 
 
+
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/api/home')
+def index():
+ return "This is a basic flask application"
 
-# Declare API Endpoints here onwards
-@app.route("/api/home", methods=['GET'])
-def return_home():
-    return jsonify({
-        'message': 'hello from server'
-    })
 
 @app.route('/analyze_summary', methods=['POST'])
 def analyze_summary():
@@ -36,4 +35,4 @@ def analyze_summary():
 
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run(debug=True)
