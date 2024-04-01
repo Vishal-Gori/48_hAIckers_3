@@ -8,6 +8,7 @@ const Page = () => {
     const { data: session } = useSession();
     const [jobTitle, setJobTitle] = useState('');
     const [jobDescription, setJobDescription] = useState('');
+    const [category, setCategory]=useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -19,6 +20,7 @@ const Page = () => {
                     userId: session?.user.id,
                     jobTitle: jobTitle,
                     jobDescription: jobDescription,
+                    category: category
                 }),
             });
 
@@ -53,6 +55,17 @@ const Page = () => {
                         id="jobDescription"
                         value={jobDescription}
                         onChange={(e) => setJobDescription(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:border-blue-500"
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="jobDescription">
+                        Category:
+                    </label>
+                    <textarea
+                        id="jobDescription"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
                         className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:border-blue-500"
                     />
                 </div>

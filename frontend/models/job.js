@@ -17,6 +17,10 @@ if (!mongoose.models.Job) {
     jobDescription: {
       type: String,
       required: true
+    },
+    category:{
+      type: String,
+      required:true
     }
   });
 
