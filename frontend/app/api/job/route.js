@@ -1,6 +1,18 @@
 import Job from "@/models/job";
 import { connectToDb } from "@/utils/database";
 
+export const GET = async (request) => {
+    try {
+        await connectToDb()
+
+        const jobs = await Job.find({})
+
+        return new Response(JSON.stringify(jobs), { status: 200 })
+    } catch (error) {
+        return new Response("Failed to fetch all prompts", { status: 500 })
+    }
+} 
+
 export const POST = async (request) => {
     const {creator: userId,  jobDescription, jobTitle,  category} = await request.json();
 
