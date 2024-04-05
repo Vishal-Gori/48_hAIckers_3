@@ -8,7 +8,11 @@ const JobCardList = ({ data }) => {
   return (
     <div className="mt-16 prompt_layout">
       {data.map((post) => (
+        <>
         <JobCard key={post._id} post={post} />
+        <br/>
+        </>
+        
       ))}
     </div>
   );
