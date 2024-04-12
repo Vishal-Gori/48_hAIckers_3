@@ -13,17 +13,31 @@ const MyProfile = () => {
     const [posts, setPosts] = useState([])
     
     useEffect(() => {
-        const fetchPosts = async () => {
-        debugger
-        const response = await fetch(`/api/users/${session?.user.id}/posts`);
-        const data = await response.json();
-        console.log(data)
-
-        setPosts(data);
-        }
-
-        fetchPosts();
-    }, [])
+      const fetchPosts = async () => {
+          if (!session?.user?.id) {
+              // Handle the case where session.user.id is not available
+              console.error("User ID is not available in the session");
+              return;
+          }
+  
+          try {
+              const response = await fetch(`/api/users/${session.user.id}/posts`);
+              if (!response.ok) {
+                  // Handle non-200 responses
+                  console.error("Failed to fetch posts:", response.statusText);
+                  return;
+              }
+              const data = await response.json();
+              console.log(data);
+              setPosts(data);
+          } catch (error) {
+              console.error("Error fetching posts:", error);
+          }
+      };
+  
+      fetchPosts();
+  }, [session]);
+  
 
     
 

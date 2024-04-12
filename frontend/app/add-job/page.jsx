@@ -17,7 +17,7 @@ const Page = () => {
             const response = await fetch("/api/job", {
                 method: "POST",
                 body: JSON.stringify({
-                    userId: session?.user.id,
+                    creator: session?.user.id,
                     jobTitle: jobTitle,
                     jobDescription: jobDescription,
                     category: category
@@ -69,6 +69,7 @@ const Page = () => {
                         className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:border-blue-500"
                     />
                 </div>
+               
                 <div className="flex justify-end">
                     <button
                         type="submit"

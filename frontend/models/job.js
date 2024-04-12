@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 
 // Check if the model has already been defined
 if (!mongoose.models.Job) {
-  // Define the Job schema
   const jobSchema = new mongoose.Schema({
     creator: {
       type: mongoose.Schema.Types.ObjectId,
