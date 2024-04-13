@@ -9,6 +9,9 @@ const Page = () => {
     const [jobTitle, setJobTitle] = useState('');
     const [jobDescription, setJobDescription] = useState('');
     const [category, setCategory]=useState('');
+    const [experience, setExperience] = useState(0);
+    const [salary, setSalary] = useState(0);
+    const [skills, setSkills] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -20,7 +23,10 @@ const Page = () => {
                     creator: session?.user.id,
                     jobTitle: jobTitle,
                     jobDescription: jobDescription,
-                    category: category
+                    category: category,
+                    experience: experience,
+                    salary: salary,
+                    skills: skills
                 }),
             });
 
@@ -59,13 +65,48 @@ const Page = () => {
                     />
                 </div>
                 <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="jobDescription">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="jobCategory">
                         Category:
                     </label>
                     <textarea
-                        id="jobDescription"
+                        id="jobCategory"
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:border-blue-500"
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="jobExperience">
+                        Experience:
+                    </label>
+                    <input
+                        type='number'
+                        id="jobExperience"
+                        value={experience}
+                        onChange={(e) => setExperience(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:border-blue-500"
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="jobSalary">
+                        Salary:
+                    </label>
+                    <input
+                        type='number'
+                        id="jobSalary"
+                        value={salary}
+                        onChange={(e) => setSalary(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:border-blue-500"
+                    />
+                </div>
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="jobSkills">
+                        Skills:
+                    </label>
+                    <textarea
+                        id="jobSkills"
+                        value={skills}
+                        onChange={(e) => setSkills(e.target.value)}
                         className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:border-blue-500"
                     />
                 </div>

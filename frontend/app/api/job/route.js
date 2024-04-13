@@ -14,7 +14,7 @@ export const GET = async (request) => {
 } 
 
 export const POST = async (request) => {
-    const {creator: userId,  jobDescription, jobTitle,  category} = await request.json();
+    const {creator: userId,  jobDescription, jobTitle,  category, salary, experience, skills} = await request.json();
 
     try {
         await connectToDb();
@@ -22,7 +22,10 @@ export const POST = async (request) => {
             creator: userId,
             jobDescription,
             jobTitle, 
-            category
+            category,
+            salary,
+            experience,
+            skills
         })
         
         return new Response(JSON.stringify(newJob), { status: 201 })

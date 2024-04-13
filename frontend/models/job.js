@@ -2,7 +2,6 @@
 
 import mongoose from 'mongoose';
 
-// Check if the model has already been defined
 if (!mongoose.models.Job) {
   const jobSchema = new mongoose.Schema({
     creator: {
@@ -20,10 +19,21 @@ if (!mongoose.models.Job) {
     category:{
       type: String,
       required:true
+    },
+    experience:{
+      type:Number,
+      required:true
+    },
+    salary:{
+      type:Number,
+      required:true
+    },
+    skills:{
+      type:String,
+      required:true
     }
   });
 
-  // Define the Job model
   mongoose.model('Job', jobSchema);
 }
 
