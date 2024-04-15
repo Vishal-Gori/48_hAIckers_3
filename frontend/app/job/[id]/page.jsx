@@ -1,51 +1,47 @@
 "use client";
+
+import Loader from "@/components/Loader";
 import React, { useEffect, useState } from "react";
 
-const job = ({ params }) => {
-  const [job,setJob] = useState(null);
+const Job = ({ params }) => {
+  const [job, setJob] = useState(null);
 
   useEffect(() => {
     const fetchJob = async () => {
-      const response = await fetch(`/api/job/${params.id}`, {
-        method: "GET",
-      });
-      const data = await response.json();
-      console.log(data);
-    setJob(data);
+      try {
+        const response = await fetch(`/api/job/${params.id}`, {
+          method: "GET",
+        });
+        const data = await response.json();
+        console.log("Fetched job data:", data); // Debugging point
+
+        // Assuming data is an array with a single object
+        if (Array.isArray(data) && data.length > 0) {
+          setJob(data[0]); // Set the first object in the array as the job
+        } else {
+          console.error("Invalid job data format:", data);
+        }
+      } catch (error) {
+        console.error("Error fetching job data:", error); // Debugging point
+      }
     };
 
-    if (job == null) {
-      fetchJob();
-    }
-  }, []);
+    fetchJob();
+  }, [params.id]);
 
+  console.log("Current job state:", job); // Debugging point
 
+  if (job === null) {
+    return <Loader />;
+  } else {
     return (
-      <div className="flex flex-col items-center bg-gray-200">
-        <div className="w-full">
-          <div className="relative h-[550px] w-full overflow-hidden">
-            <div className={`absolute inset-0`}>
-              
-              <div className="absolute inset-0 gradient-overlay"></div>
-              <div className="absolute inset-0 flex flex-col justify-end w-fit pb-14 pl-10 pr-20">
-                <div className="text-white text-left w-fit font-extrabold text-5xl p-2">
-                  {job?.jobTitle}
-                </div>
-                <div className="text-white text-left p-3 w-fit font-extralight text-2xl">
-                  {job?.jobDescription}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div
-          id="content"
-          className="flex flex-col items-center w-3/4 justify-center pt-9 pb-12 bg-white px-14 my-4 rounded-md"
-        ></div>
+      <div className="max-w-2xl mx-auto mt-8 p-4 bg-white shadow-lg rounded-lg">
+        <h1 className="text-3xl font-bold mb-4">Job Title: {job.jobTitle}</h1>
+        <p className="text-lg">Job Description: {job.jobDescription}</p>
+        {/* Render other job details here */}
       </div>
     );
-  } 
+  }
+};
 
-
-export default job;
+export default Job;
