@@ -38,6 +38,7 @@ const Job = ({ params }) => {
       <div className="max-w-2xl mx-auto mt-8 p-4 bg-white shadow-lg rounded-lg">
         <h1 className="text-3xl font-bold mb-4">Job Title: {job.jobTitle}</h1>
         <p className="text-lg">Job Description: {job.jobDescription}</p>
+        
         {/* Render other job details here */}
       </div>
     );
