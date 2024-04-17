@@ -7,23 +7,27 @@ const JobCard = ({ post }) => {
   const { data: session } = useSession();
   const [myJob, setMyPosts] = useState([]);
   useEffect(() => {
+    console.log(session?.user._id)
     const fetchPosts = async () => {
       const response = await fetch(`/api/users/${session?.user.id}/posts`);
       const data = await response.json();
-
+      console.log(data)
       setMyPosts(data);
     };
 
-    if (session?.user.id) fetchPosts();
+    fetchPosts();
   }, [session?.user.id]);
 
 
   const handleDelete = async (post) => {
+    
     const hasConfirmed = confirm(
       "Are you sure you want to delete this prompt?"
     );
-
+    debugger
+    console.log(post._id)
     if (hasConfirmed) {
+      console.log(post.id)
       try {
         await fetch(`/api/job/${post._id}`, {
           method: "DELETE",

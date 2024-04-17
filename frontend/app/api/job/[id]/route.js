@@ -18,10 +18,10 @@ export const GET = async (request, { params }) => {
 export const DELETE = async (request, { params }) => {
   try {
       await connectToDb();
-      await Job.findByIdAndRemove(params._id);
+      await Job.findByIdAndDelete(params.id);
 
       return new Response("job deleted successfully", { status: 200 });
   } catch (error) {
-      return new Response("Error deleting job", { status: 500 });
+      return new Response(error, { status: 500 });
   }
 };
